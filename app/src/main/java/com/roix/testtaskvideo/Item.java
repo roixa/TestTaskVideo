@@ -1,5 +1,7 @@
 package com.roix.testtaskvideo;
 
+import android.util.Log;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
@@ -38,6 +40,7 @@ public class Item {
 
     public void setPath(String path) {
         this.path = path;
+        Log.d("@@@","setPath"+path);
     }
 
     public String getAuthor() {

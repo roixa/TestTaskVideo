@@ -8,5 +8,7 @@ public class Constants {
     public static final String baseUrl="http://my.bubuka.info/";
     public static final String clip="clip";
     public static final String video="video";
+    public static final String audio="music";
+    public static final String contentPath="content/";
 
 }
