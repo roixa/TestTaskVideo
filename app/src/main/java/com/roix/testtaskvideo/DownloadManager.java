@@ -39,7 +39,8 @@ public class DownloadManager implements DownloadFileTask.DownloadCallback {
     }
 
     public void startDownload( ){
-        startLoadFile(downloadQueue.poll());
+        if(downloadQueue.size()!=0)
+            startLoadFile(downloadQueue.poll());
     }
 
 
@@ -48,13 +49,15 @@ public class DownloadManager implements DownloadFileTask.DownloadCallback {
     public void onLoadResult(Item item) {
         Log.d("@@@","onLoadResult");
         resultQueue.add(item);
-        startLoadFile(downloadQueue.poll());
+        Item downloading=downloadQueue.poll();
+        presenter.onLoadFile(resultQueue,downloading,downloadQueue);
+        startLoadFile(downloading);
     }
 
     private void startLoadFile(final Item item){
         if (item==null)return;
         final DownloadFileTask.DownloadCallback callback=this;
-        apiModel.downloadFileAsync(Constants.clip,item.getPath()).enqueue(new retrofit2.Callback<ResponseBody>() {
+        apiModel.downloadFileAsync(item.getType(),item.getPath()).enqueue(new retrofit2.Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.body()!=null)
@@ -67,6 +70,7 @@ public class DownloadManager implements DownloadFileTask.DownloadCallback {
             }
         });
     }
+
 
 
 }

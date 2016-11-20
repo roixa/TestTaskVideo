@@ -8,13 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Deque;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by roix on 19.11.2016.
@@ -44,7 +40,9 @@ public class DownloadFileTask extends AsyncTask<Item,Integer,Item>{
     private boolean writeResponseBodyToDisk(ResponseBody body,String type,String path) {
         try {
             //File futureStudioIconFile = new File( type+File.separator + path);
-            File futureStudioIconFile = new File( cacheDir,  path);
+            Log.d("@@@","path" +cacheDir.getPath()+File.separator+type+File.separator+ path);
+            File futureStudioIconFile = new File( cacheDir,path);
+            if (futureStudioIconFile.exists()) return true;
             InputStream inputStream = null;
             OutputStream outputStream = null;
             try {
@@ -85,6 +83,7 @@ public class DownloadFileTask extends AsyncTask<Item,Integer,Item>{
     protected void onPostExecute(Item item) {
         super.onPostExecute(item);
         callback.onLoadResult(item);
+
     }
 
     public  interface DownloadCallback{

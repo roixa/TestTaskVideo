@@ -9,7 +9,7 @@ import org.simpleframework.xml.Root;
  * Created by roix on 18.11.2016.
  */
 
-@Root(name = "Object")
+@Root(name = "Object",strict = false)
 public class Item {
     @Attribute
     private String id;
@@ -33,6 +33,16 @@ public class Item {
 
     @Attribute
     private String version;
+
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getPath() {
         return path;
