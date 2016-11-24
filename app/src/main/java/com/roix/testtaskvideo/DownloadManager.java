@@ -43,6 +43,12 @@ public class DownloadManager implements DownloadFileTask.DownloadCallback {
             startLoadFile(downloadQueue.poll());
     }
 
+    public List<Item> getDownloadedList(){
+        List<Item> ret=new ArrayList<>();
+        ret.addAll(resultQueue);
+        return ret;
+    }
+
 
 
     @Override

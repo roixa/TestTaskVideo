@@ -25,9 +25,14 @@ public class Presenter {
     private DownloadManager  manager;
     private File cacheDir;
     private String TAG="Presenter";
+
+    private boolean isPlaying=false;
+    private List<Item> playList;
+
     public Presenter(MainView mainView, final File cacheDir){
         this.mainView=mainView;
         this.cacheDir=cacheDir;
+        playList=new ArrayList<>();
         api= new Retrofit.Builder().baseUrl(Constants.baseUrl).client(new OkHttpClient())
                 .addConverterFactory(SimpleXmlConverterFactory.create()).build().create(ApiModel.class);
 
@@ -47,6 +52,7 @@ public class Presenter {
         items.add(downloading);
         items.addAll(queue);
         mainView.showList(items,downloaded.size());
+        if(!isPlaying)startPlayingNext(false);
     }
 
     private void startLoadList(final String type){
@@ -70,5 +76,12 @@ public class Presenter {
             }
         });
 
+    }
+
+    private void startPlayingNext(boolean isClip){
+        isPlaying=true;
+        if(playList.size()==0) playList.addAll(manager.getDownloadedList());
+        Item play=playList.remove(0);
+        mainView.showContent(play,play);
     }
 }
