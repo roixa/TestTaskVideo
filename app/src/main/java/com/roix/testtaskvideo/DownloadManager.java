@@ -56,7 +56,8 @@ public class DownloadManager implements DownloadFileTask.DownloadCallback {
         Log.d("@@@","onLoadResult");
         resultQueue.add(item);
         Item downloading=downloadQueue.poll();
-        presenter.onLoadFile(resultQueue,downloading,downloadQueue);
+        if(presenter!=null)
+            presenter.onLoadFile(resultQueue,downloading,downloadQueue);
         startLoadFile(downloading);
     }
 

@@ -83,6 +83,7 @@ public class DownloadFileTask extends AsyncTask<Item,Integer,Item>{
     protected void onPostExecute(Item item) {
         super.onPostExecute(item);
         callback.onLoadResult(item);
+        callback=null;
 
     }
 
